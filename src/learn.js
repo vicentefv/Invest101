@@ -175,7 +175,7 @@ function renderLearnReader(animate){
   if(lrnSt.topic!=='todos'&&!LRN.some(x=>x.topic===lrnSt.topic)){ const m=lrnMod(lrnSt.topic);
     $('lrnRead').innerHTML=`<div class="lrn-body mc-${m.color}${animate?' in':''}"><header class="lrn-head"><div class="lrn-hg">${lrnGlyph(m.glyph)}</div><p class="lrn-mod">${esc(m.name)} · a caminho</p><h2 class="lrn-title">${esc(m.name)}</h2></header><p class="lrn-lead">Este módulo ainda não está escrito. Cada tema só entra com fontes oficiais verificadas para Portugal.</p><ul class="lrn-ul" style="--i:1">${m.soon.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><div class="lrn-foot"><button class="btn primary lg" data-lt="todos">Ver os temas disponíveis</button></div></div>`; return; }
   const a=LRN.find(x=>x.id===lrnSt.sel)||LRN[0]; lrnSt.sel=a.id; const p=lrnProg(),done=!!p.done[a.id],m=lrnMod(a.topic);
-  $('lrnRead').innerHTML=`<div class="lrn-body mc-${m.color}${animate?' in':''}"><header class="lrn-head"><div class="lrn-hg">${lrnGlyph(m.glyph)}</div><p class="lrn-mod">${esc(m.name)} · ${a.mins} min</p><h2 class="lrn-title" data-kin>${esc(a.title)}</h2></header><p class="lrn-lead">${a.lead}</p>${a.blocks.map((b,i)=>lrnBlock(b,a,i)).join('')}${a.src.length?`<div class="lrn-src"><p class="lab">Fontes <span class="pill up">Verificado em ${LRN_VERIFIED}</span></p><ul>${a.src.map(s=>`<li><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.l)}</a></li>`).join('')}</ul></div>`:''}<div class="lrn-foot"><button class="btn ${done?'':'primary'} lg" id="lrnDone" aria-pressed="${done}">${done?'Lido':'Marcar como lido'}</button><span class="lab">${done?'Já contou para a tua sequência.':'Ganha 20 XP e conta para a sequência de hoje.'}</span></div>${lrnNextHtml(a,p)}</div>`;
+  $('lrnRead').innerHTML=`<div class="lrn-body mc-${m.color}${animate?' in':''}"><header class="lrn-head"><div class="lrn-hg">${lrnGlyph(m.glyph)}</div><p class="lrn-mod">${esc(m.name)} · ${a.mins} min</p><h2 class="lrn-title" data-kin>${esc(a.title)}</h2></header><p class="lrn-lead">${a.lead}</p>${a.blocks.map((b,i)=>lrnBlock(b,a,i)).join('')}${a.src.length?`<div class="lrn-src"><p class="lab">Fontes <span class="pill up">Verificado em ${LRN_VERIFIED}</span></p><ul>${a.src.map(s=>`<li><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.l)}</a></li>`).join('')}</ul></div>`:''}${lrnEndHtml(a,p)}</div>`;
   lrnMountWidgets($('lrnRead')); m3Scan($('lrnRead')); }
 function renderLearn(){
   if(!lrnSt.bound){ lrnSt.bound=true;
@@ -192,7 +192,7 @@ function renderLearn(){
       if(e.target.closest('[data-lrnlist]')){ $('lrnRows').scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}); return; }
       const nx=e.target.closest('[data-next]'); if(nx){ lrnOpen(nx.dataset.next,true); return; }
       const re=e.target.closest('[data-re]'); if(re){ const t=rd.querySelector(`[data-bid="${re.dataset.re}"]`); if(t){ t.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'center'}); t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash'); } return; }
-      if(e.target.closest('#lrnDone')){ const p=lrnProg(),id=lrnSt.sel; if(p.done[id]){ delete p.done[id]; lrnSt.justDone=null; } else { p.done[id]=1; lrnAward(20); lrnSt.justDone=id; } lrnSave(); renderLearnProgress(); renderLearnList(); renderLearnReader(false); const af=$('lrnAfter'); if(af) af.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'center'}); } });
+      if(e.target.closest('#lrnDone')){ const p=lrnProg(),id=lrnSt.sel; if(p.done[id]){ delete p.done[id]; lrnSt.justDone=null; } else { p.done[id]=1; lrnAward(20); lrnSt.justDone=id; } lrnSave(); renderLearnProgress(); renderLearnList(); const art=LRN.find(x=>x.id===id); $('lrnEnd').outerHTML=lrnEndHtml(art,p); const af=$('lrnAfter'); if(af) af.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}); } });
     rd.addEventListener('submit',e=>{ const f=e.target.closest('.lrn-guess'); if(!f) return; e.preventDefault();
       const qz=f.closest('.lrn-quiz'),art=LRN.find(x=>x.id===lrnSt.sel),b=art.blocks.find(x=>x.id===qz.dataset.q),inp=f.querySelector('input');
       if(!inp.value.trim()){ inp.focus(); return; } const g=lrnNum(inp.value),ok=Math.abs(g-b.answer)<=Math.max(Math.abs(b.answer)*b.tol,.0001);
@@ -204,11 +204,19 @@ function lrnOpen(id,scroll){ lrnSt.sel=id; lrnSt.justDone=null; if(st.view!=='ap
 // Abre a biblioteca já filtrada num módulo (usado pelo mapa da Home).
 function lrnOpenModule(id){ lrnSt.topic=id; lrnSt.q=''; const first=LRN.find(a=>a.topic===id); if(first) lrnSt.sel=first.id; if(st.view!=='aprender') go('aprender'); else renderLearn(); }
 
-// Fim da aula: próximo tema por ler; depois de "Marcar como lido", um menu com alternativas de outros módulos
+// Fim da aula. Só esta parte muda ao marcar como lido (redesenhar a aula inteira fazia a página saltar e perder o deslize).
+function lrnEndHtml(a,p){ const done=!!p.done[a.id]; return `<div id="lrnEnd"><div class="lrn-foot"><button class="btn ${done?'':'primary'} lg" id="lrnDone" aria-pressed="${done}">${done?'Lido':'Marcar como lido'}</button><span class="lab">${done?'Já contou para a tua sequência.':'Ganha 20 XP e conta para a sequência de hoje.'}</span></div>${lrnNextHtml(a,p)}</div>`; }
+// Próximo tema por ler; depois de "Marcar como lido", um painel com alternativas de outros módulos
 function lrnNextHtml(a,p){
   const i=LRN.indexOf(a),nx=LRN.slice(i+1).find(x=>x.topic===a.topic&&!p.done[x.id])||LRN.find(x=>x!==a&&!p.done[x.id]);
   const next=nx?`<button class="lrn-next mc-${lrnMod(nx.topic).color}" data-next="${nx.id}"><span>Próximo tema</span><b>${esc(nx.title)}</b></button>`:'';
   if(lrnSt.justDone!==a.id) return next;
   const alts=LRN_MODULES.map(m=>LRN.find(x=>x.topic===m.id&&x!==a&&x!==nx&&!p.done[x.id])).filter(Boolean).slice(0,4);
-  return `<div class="lrn-after" id="lrnAfter" role="region" aria-label="O que ler a seguir"><p class="lrn-after-t">${nx?'Feito. O que lês a seguir?':'Leste todos os temas.'}</p>${next}${alts.length?`<p class="lab">Ou escolhe outro tema</p><div class="lrn-alt">${alts.map(x=>`<button class="btn mc-${lrnMod(x.topic).color}" data-next="${x.id}"><span class="lab">${esc(lrnMod(x.topic).name)}</span>${esc(x.title)}</button>`).join('')}</div>`:''}<button class="btn" data-lrnlist>Ver todos os temas</button></div>`;
+  const arrow='<svg class="lrn-arr" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5"/></svg>';
+  return `<section class="lrn-after" id="lrnAfter" aria-label="O que ler a seguir">
+    <header class="lrn-after-h"><svg class="lrn-check" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m7.5 12.5 3 3 6-6.5"/></svg><div><p class="lrn-after-t">${nx?'Feito. O que lês a seguir?':'Leste todos os temas.'}</p><p class="lab">+20 XP · conta para a sequência de hoje</p></div></header>
+    ${next}
+    ${alts.length?`<p class="lab lrn-after-l">Ou muda de assunto</p><div class="lrn-alt">${alts.map(x=>`<button class="lrn-row mc-${lrnMod(x.topic).color}" data-next="${x.id}"><i class="lrn-mk"></i><span class="lrn-rt">${esc(x.title)}</span><span class="lrn-rm">${esc(lrnMod(x.topic).name)} · ${x.mins} min</span>${arrow}</button>`).join('')}</div>`:''}
+    <button class="lrn-all" data-lrnlist>Ver todos os temas ${arrow}</button>
+  </section>`;
 }

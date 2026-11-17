@@ -20,6 +20,10 @@ if(require.main===module){
   for(const f of fs.readdirSync(path.join(dir,'ohlc'))){ const id=f.replace(/\.json$/,''),doc=rd(path.join(dir,'ohlc',f)); if(!doc) continue;
     const r=update(id,doc,rd(path.join(dir,'quotes',f))); if(!r) continue;
     fs.writeFileSync(path.join(dir,'quotes',f),JSON.stringify(r.out)); fs.writeFileSync(path.join(dir,'history',f),JSON.stringify(r.hist)); ok.push(id); }
+  // a hora de «Atualizado» no topo do site vem de meta/status: passa a ser a da cotação mais recente
+  const last=fs.readdirSync(path.join(dir,'quotes')).map(f=>rd(path.join(dir,'quotes',f))?.updatedAt).filter(Boolean).sort().pop();
+  const mf=path.join(dir,'meta','status.json'),meta=rd(mf)||{};
+  if(last){ meta.updatedAt=last; delete meta.next; fs.mkdirSync(path.dirname(mf),{recursive:true}); fs.writeFileSync(mf,JSON.stringify(meta)); }
   console.log('cotações atualizadas:',ok.length,ok.join(' '));
 }
 module.exports={update,day};

@@ -8,8 +8,9 @@ const EO='cubic-bezier(.23,1,.32,1)',q1=s=>document.querySelector(s),FINE=matchM
 // ---------- seletor segmentado: a marca desliza até à opção escolhida ----------
 const SEGS=['fPeriod','fState','rng','tfSeg','ctSeg','cmpRng','corWin','fxWin'].map($).filter(Boolean);
 function placeSeg(seg,instant){ const ind=seg.querySelector('.seg-ind'); if(!ind||!seg.offsetWidth) return; const b=seg.querySelector('button[aria-pressed="true"]'),w=seg.clientWidth,h=seg.clientHeight;
-  if(instant) ind.style.transition='none'; ind.style.clipPath=b?`inset(${b.offsetTop}px ${w-b.offsetLeft-b.offsetWidth}px ${h-b.offsetTop-b.offsetHeight}px ${b.offsetLeft}px round 4px)`:'inset(50% 50% 50% 50% round 4px)'; if(instant){ void ind.offsetWidth; ind.style.transition=''; } }
+  if(instant) ind.style.transition='none'; ind.style.clipPath=b?`inset(${b.offsetTop}px ${w-b.offsetLeft-b.offsetWidth}px ${h-b.offsetTop-b.offsetHeight}px ${b.offsetLeft}px round 999px)`:'inset(50% 50% 50% 50% round 999px)'; if(instant){ void ind.offsetWidth; ind.style.transition=''; } }
 SEGS.forEach(seg=>{ seg.classList.add('sl'); const i=document.createElement('span'); i.className='seg-ind'; i.setAttribute('aria-hidden','true'); seg.prepend(i); placeSeg(seg,true);
+  new ResizeObserver(()=>placeSeg(seg,true)).observe(seg);  // a vista pode estar escondida (largura 0) quando o seletor é criado
   new MutationObserver(()=>placeSeg(seg,false)).observe(seg,{attributes:true,attributeFilter:['aria-pressed','hidden'],subtree:true}); });  // 'hidden': os intervalos da ficha (rng e tfSeg) trocam de lugar consoante o ativo tem velas
 const placeSegs=()=>SEGS.forEach(s=>placeSeg(s,true)); addEventListener('resize',placeSegs); document.fonts?.ready.then(placeSegs);
 

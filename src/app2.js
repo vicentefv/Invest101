@@ -385,7 +385,7 @@ function calcRR(){ const en=pn($('rrEntry').value),sp=pn($('rrStop').value),tg=p
   out.innerHTML=h; msg.textContent=t; }
 function calcPiv(){ const H=pn($('pvH').value),L=pn($('pvL').value),C=pn($('pvC').value),tab=$('pvOut'),msg=$('pvMsg'); const d=Math.max(decOf($('pvH').value),decOf($('pvL').value),decOf($('pvC').value),2),f=v=>nf(v,d);
   if(![H,L,C].every(isFinite)||H<L||C>H||C<L){ tab.innerHTML=''; msg.className='msg err'; msg.textContent='O máximo tem de ser maior do que o mínimo e o fecho tem de ficar entre os dois.'; return; }
-  msg.className='msg'; msg.textContent='O Radar Macro só tem fechos diários, por isso o máximo e o mínimo têm de vir da sua plataforma.';
+  msg.className='msg'; msg.textContent='O Invest101 só tem fechos diários, por isso o máximo e o mínimo têm de vir da sua plataforma.';
   const P=(H+L+C)/3,R=H-L,cl={R3:H+2*(P-L),R2:P+R,R1:2*P-L,S1:2*P-H,S2:P-R,S3:L-2*(H-P)},fb={R3:P+R,R2:P+.618*R,R1:P+.382*R,S1:P-.382*R,S2:P-.618*R,S3:P-R},cm={R4:C+R*1.1/2,R3:C+R*1.1/4,R2:C+R*1.1/6,R1:C+R*1.1/12,S1:C-R*1.1/12,S2:C-R*1.1/6,S3:C-R*1.1/4,S4:C-R*1.1/2};
   const row=k=>`<tr><td>${k}</td><td>${cl[k]!=null?f(cl[k]):'n/d'}</td><td>${fb[k]!=null?f(fb[k]):'n/d'}</td><td>${f(cm[k])}</td></tr>`;
   tab.innerHTML=`<thead><tr><th>Nível</th><th>Clássico</th><th>Fibonacci</th><th>Camarilla</th></tr></thead><tbody>${['R4','R3','R2','R1'].map(row).join('')}<tr class="piv"><td>Pivot</td><td>${f(P)}</td><td>${f(P)}</td><td>${f(C)}</td></tr>${['S1','S2','S3','S4'].map(row).join('')}</tbody>`; }

@@ -68,3 +68,13 @@ html{scrollbar-color:var(--frame) transparent}
 /* transição entre vistas: entra com um pequeno deslize */
 .view.enter{animation:viewIn .28s var(--ease-out) both}
 @keyframes viewIn{from{opacity:0;transform:translateY(10px)}}
+
+/* Segmentos com indicador deslizante (prazo, linha/velas): pílula de tinta por baixo da opção escolhida, como os outros segmentos */
+.seg-ind,.ctl .seg-ind{background:var(--ink);box-shadow:none;transition:clip-path .24s var(--ease-out)}
+.seg.sl button[aria-pressed="true"],.ctl .seg.sl button[aria-pressed="true"]{background:none;color:var(--bg)}
+.ctl .seg{padding:2px}
+.ctl .seg button{border-radius:999px;transition:color .2s ease,background .15s ease,transform .16s var(--ease-out)}
+@media (hover:hover) and (pointer:fine){.ctl .seg button[aria-pressed="true"]:hover{background:none}}
+/* No telemóvel a barra dos gráficos parte em linhas em vez de ficar cortada à direita */
+@media (max-width:700px){.ctl-row{flex-wrap:wrap;overflow:visible;row-gap:8px;column-gap:8px;padding:8px 10px;justify-content:flex-start}.ctl-row>*{margin-left:0}.ctl-row .sepv{display:none}}
+@media (prefers-reduced-motion:reduce){.seg-ind,.ctl .seg-ind{transition:none}}
