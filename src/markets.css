@@ -1,0 +1,49 @@
+/* ===== Vistas de mercados no estilo "Cartaz" ===== */
+.vh.poster>*:not(.vh-g){position:relative;z-index:1}
+.vh.poster .muted,.vh.poster .meta,.vh.poster span:not(.pill){color:inherit}
+
+/* Painel: a leitura do regime é um cartaz */
+.regime{position:relative;overflow:hidden;background:var(--blue);color:#FFFAEB;border:2px solid var(--frame);padding:clamp(18px,3vw,40px) clamp(16px,3vw,40px);gap:16px 28px}
+.regime>*{position:relative;z-index:1}
+.regime::after{content:"";position:absolute;right:clamp(-70px,-4vw,-30px);top:clamp(-70px,-4vw,-30px);width:clamp(120px,20vw,260px);aspect-ratio:1;border-radius:50%;background:var(--yellow);border:2px solid #16120E;z-index:0}
+.regime::before{content:"";position:absolute;right:clamp(40px,12vw,200px);bottom:-60px;width:clamp(110px,16vw,210px);aspect-ratio:2;border-radius:999px 999px 0 0;background:var(--red);border:2px solid #16120E;z-index:0}
+.regime h1{font-size:clamp(24px,4.4vw,58px);font-weight:900;letter-spacing:-.045em;line-height:1;max-width:20ch}
+.regime .lede{color:#FFFAEB;font-size:clamp(14px,1.4vw,17px);max-width:62ch;opacity:.95}
+.regime .rg-date{color:#FFFAEB;opacity:.8}
+.regime .btn{background:#FFFAEB;color:#16120E;border-color:#16120E}
+.regime .btn.primary{background:var(--yellow)}
+.regime .link{color:#FFFAEB}
+@media (max-width:760px){.regime{grid-template-columns:1fr}}
+
+/* cotações em blocos de cor conforme a direção do dia */
+.mcards{gap:10px}
+.mcard{border:2px solid var(--frame);border-radius:var(--r);padding:12px 14px 0;transition:transform .25s var(--ease-out),background .2s}
+.mcard:has(.mv2.up){background:color-mix(in srgb,var(--green) 17%,var(--surface))}
+.mcard:has(.mv2.down){background:color-mix(in srgb,var(--red) 15%,var(--surface))}
+@media (hover:hover) and (pointer:fine){.mcard:hover{transform:translateY(-4px);background:var(--yellow);color:#16120E;border-color:var(--frame)}.mcard:hover .mc{color:#3B342A}}
+.mcard .mn{font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;font-size:13px}
+.mcard .mp{font-family:var(--f-display);font-weight:800;font-size:clamp(17px,1.9vw,26px);letter-spacing:-.045em;font-stretch:100%;margin-top:6px}
+.mcard .mv2{font-weight:600;font-size:12px}
+.mcard:active{transform:scale(.98)}
+
+/* faixa de indicadores e restantes painéis */
+.kstrip{border:2px solid var(--frame)}
+.tile{border-left-color:var(--line-2)}
+.tile .big,.kn{font-family:var(--f-display);font-weight:800;font-size:clamp(20px,2.2vw,30px);letter-spacing:-.045em;font-stretch:100%}
+.heat-leg i{border:1.5px solid var(--frame)}
+
+/* ecrãs estreitos: controlos do gráfico e listas passam para várias linhas em vez de sair do ecrã */
+#v-mercados .seg,#v-mercados .tgs,#v-mercados .chips{max-width:100%;flex-wrap:wrap}
+#v-mercados .pk-list{max-width:100%;overflow-x:auto}
+#v-mercados .chartpanel .ph{gap:8px}
+@media (max-width:640px){
+  .vh.poster{min-height:0}
+  .vh.poster h1{font-size:clamp(26px,9vw,40px)}
+  .mcard .mp{font-size:clamp(16px,5vw,22px)}
+}
+
+/* ajustes de leitura */
+.regime::after{width:clamp(96px,14vw,190px)}
+.regime .acts{align-self:end}
+.kn small,.tile .big small{font-family:var(--f-body);font-weight:500;font-size:11.5px;letter-spacing:0;color:var(--muted);display:block}
+@media (max-width:760px),(pointer:coarse){.ctl-row{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}}

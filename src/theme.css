@@ -1,0 +1,70 @@
+/* ===== Tema "Cartaz": cromo global (barra, navegação, painéis, botões) por cima dos tokens de style.css ===== */
+:root{--frame:var(--ink)}
+:root[data-theme="dark"]{--frame:var(--line-2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--frame:var(--line-2)}}
+
+/* cores de módulo: --mc é o campo, --on-mc o texto sobre ele */
+.mc-yellow{--mc:var(--yellow);--on-mc:#16120E}
+.mc-red{--mc:var(--red);--on-mc:#FFFAEB}
+.mc-blue{--mc:var(--blue);--on-mc:#FFFAEB}
+.mc-green{--mc:var(--green);--on-mc:#FFFAEB}
+.mc-ink{--mc:#16120E;--on-mc:#F3EDDD}
+:root[data-theme="dark"] .mc-ink{--mc:#2B251C}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mc-ink{--mc:#2B251C}}
+
+/* barra superior: tinta com filete amarelo; o separador ativo é um bloco de cor */
+.top{background:var(--bar);color:var(--on-bar);border-bottom:3px solid var(--yellow)}
+.brand{color:var(--on-bar)}
+.brand svg{color:var(--yellow)}
+.brand b{font-size:15px;font-weight:800;letter-spacing:-.03em}
+.brand small{color:var(--bar-muted)}
+.nav button{color:var(--bar-muted);font-weight:600;transition:color .15s,background .15s}
+.nav button::after{display:none}
+@media (hover:hover) and (pointer:fine){.nav button:hover{color:var(--on-bar)}}
+.nav button[aria-current="true"]{background:var(--yellow);color:#16120E}
+.find{background:transparent;border-color:rgba(243,237,221,.28);color:var(--bar-muted);border-radius:999px}
+.find kbd{background:transparent;border-color:rgba(243,237,221,.28);color:var(--bar-muted)}
+@media (hover:hover) and (pointer:fine){.find:hover{border-color:var(--yellow);color:var(--on-bar)}}
+.live{color:var(--on-bar)}
+.clock{color:var(--bar-muted)}
+.thm{border-color:rgba(243,237,221,.28);color:var(--on-bar);border-radius:999px}
+@media (hover:hover) and (pointer:fine){.thm:hover{border-color:var(--yellow);color:var(--yellow)}}
+@media (max-width:1600px){.clock{display:none}.find span,.find kbd{display:none}.find{padding:0;width:34px;min-width:0;justify-content:center}}
+@media (max-width:1000px){.nav{border-top:1px solid rgba(243,237,221,.14)}.nav button{padding:0 12px}}
+
+/* fita de cotações */
+.tape{background:var(--surface);border-bottom:2px solid var(--frame)}
+.tape-item{border-right-color:var(--line-2)}
+
+/* títulos de vista e painéis */
+.vh h1{font-size:clamp(26px,3.6vw,44px);font-weight:800;letter-spacing:-.035em;line-height:1.02}
+.vh p{font-size:15px;color:var(--ink-2);max-width:62ch}
+.panel{border:2px solid var(--frame);border-radius:var(--r);background:var(--surface)}
+.ph{background:var(--sunk);border-bottom:2px solid var(--frame)}
+.ph h2{font-size:12.5px;font-weight:700;letter-spacing:-.01em}
+.ph+.kv,.ph+.rows{border-top:0}
+
+/* botões, chips e segmentos */
+.btn{border:2px solid var(--frame);border-radius:999px;background:var(--surface);font-weight:600;padding:6px 14px}
+.btn.primary{background:var(--yellow);color:#16120E;border-color:var(--frame)}
+@media (hover:hover) and (pointer:fine){.btn:hover{border-color:var(--frame);background:var(--sunk)}.btn.primary:hover{background:var(--yellow);filter:none;transform:translateY(-2px)}}
+.btn.lg{padding:11px 22px;font-size:14.5px}
+.seg{border:2px solid var(--frame);background:var(--surface);border-radius:999px;padding:2px}
+.seg button{border-radius:999px}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);box-shadow:none}
+.chip{border:1.5px solid var(--frame);border-radius:999px;background:var(--surface)}
+.chip[aria-pressed="true"]{background:var(--yellow);color:#16120E;border-color:var(--frame)}
+.inp{border:2px solid var(--frame);border-radius:var(--r);background:var(--surface)}
+.inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px var(--accent-soft)}
+.pill{border-radius:999px;padding:2px 10px}
+
+/* realces do navegador */
+::selection{background:var(--yellow);color:#16120E}
+html{scrollbar-color:var(--frame) transparent}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+:root[data-theme="dark"] :focus-visible{outline-color:var(--yellow)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :focus-visible{outline-color:var(--yellow)}}
+
+/* transição entre vistas: entra com um pequeno deslize */
+.view.enter{animation:viewIn .28s var(--ease-out) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}}

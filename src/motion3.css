@@ -1,0 +1,39 @@
+/* ===== Movimento partilhado ===== */
+/* texto cinético: cada palavra sobe de dentro de uma "janela" */
+.k{display:inline-block;overflow:clip;vertical-align:top;padding-bottom:.12em;margin-bottom:-.12em}
+.kw{display:inline-block;transform:translateY(108%)}
+[data-kin].in .kw{transform:none;transition:transform .85s var(--ease-out);transition-delay:calc(var(--i)*60ms)}
+
+/* cortina entre vistas */
+#curtain{position:fixed;inset:0;z-index:90;pointer-events:none;clip-path:inset(0 0 0 100%);background:var(--yellow)}
+
+/* indicador deslizante do menu: um bloco amarelo que desliza até ao separador ativo */
+.nav-ind{display:block;position:absolute;left:0;top:0;bottom:0;width:1px;transform-origin:0 0;transform:translateX(var(--nx,0px)) scaleX(var(--ns,0));background:var(--yellow);transition:transform .38s var(--ease-out);z-index:0;pointer-events:none}
+.nav button{z-index:1}
+.nav button[aria-current="true"]{background:none;color:#16120E}
+
+/* cursor (só com rato) */
+#cur{position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:96;opacity:0;transition:opacity .2s}
+#cur::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--ink);transition:scale .2s var(--ease-out)}
+:root[data-theme="dark"] #cur::before{border-color:var(--yellow)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #cur::before{border-color:var(--yellow)}}
+#cur.on{opacity:.9}
+#cur.hot::before{scale:1.65}
+@media (hover:none),(pointer:coarse){#cur{display:none}}
+
+/* cabeçalho "cartaz" das vistas: faixa de cor, título gigante, forma a rodar com o scroll */
+.vh.poster{position:relative;background:var(--mc);color:var(--on-mc);border:2px solid var(--frame);border-radius:var(--r);padding:clamp(18px,3vw,34px) clamp(16px,3vw,34px);min-height:clamp(120px,16vw,200px);align-items:flex-end;overflow:hidden;margin-bottom:6px}
+.vh.poster h1{position:relative;z-index:1;font-size:clamp(28px,5.2vw,64px);letter-spacing:-.045em;font-weight:900;line-height:.98}
+.vh.poster p{position:relative;z-index:1;color:var(--on-mc);opacity:.92;max-width:52ch;font-size:clamp(13.5px,1.3vw,16px)}
+.vh-g{position:absolute;right:clamp(-26px,-2vw,-8px);top:clamp(-26px,-2vw,-8px);width:clamp(120px,22%,240px);color:var(--on-mc);opacity:.9;animation:vhSpin 1.2s var(--ease-out) both}
+.vh-g svg{width:100%;height:auto;display:block}
+@keyframes vhSpin{from{transform:rotate(-35deg) scale(.7);opacity:0}}
+.vh.poster .lrn-prog{position:relative;z-index:1}
+
+/* pausa de tudo o que está em loop quando o separador está escondido */
+.m3-paused *,.m3-paused *::before,.m3-paused *::after{animation-play-state:paused!important}
+
+@media (prefers-reduced-motion:reduce){
+  .kw{transform:none!important;transition:none!important}
+  #curtain{display:none}.nav-ind{transition:none}.vh-g{animation:none}
+}

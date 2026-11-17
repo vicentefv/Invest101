@@ -1,0 +1,527 @@
+<a class="sr" href="#main">Saltar para o conteúdo</a>
+<header class="top">
+  <div class="top-in">
+    <button class="brand" data-go="inicio" aria-label="Invest101, ir para o início">
+      <svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true" fill="none" stroke="currentColor">
+        <circle cx="15" cy="15" r="13" stroke-width="1.5" opacity=".4"/>
+        <circle cx="15" cy="15" r="7.5" stroke-width="1.5" opacity=".7"/>
+        <path d="M15 15 L24.2 5.8" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="15" cy="15" r="2" fill="currentColor" stroke="none"/>
+        <circle cx="21" cy="19.5" r="1.8" fill="currentColor" stroke="none"/>
+      </svg>
+      <span><b>Invest101</b><small>Aprender e acompanhar mercados</small></span>
+    </button>
+    <nav class="nav" aria-label="Secções">
+      <span class="nav-ind" aria-hidden="true"></span>
+      <button data-go="inicio" aria-current="true">Início</button>
+      <button data-go="aprender" aria-current="false">Aprender</button>
+      <button data-go="painel" aria-current="false">Painel</button>
+      <button data-go="mercados" aria-current="false">Gráficos</button>
+      <button data-go="calendario" aria-current="false">Calendário</button>
+      <button data-go="analise" aria-current="false">Análise</button>
+      <button data-go="radar" aria-current="false">Radar</button>
+      <button data-go="ferramentas" aria-current="false">Ferramentas</button>
+      <button data-go="diario" aria-current="false">Diário</button>
+      <button data-go="metodo" aria-current="false">Metodologia</button>
+    </nav>
+    <div class="status">
+      <button class="find" id="findBtn" aria-label="Procurar tema, ativo, evento ou ferramenta">
+        <svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></svg>
+        <span>Procurar símbolo</span><kbd>Ctrl K</kbd>
+      </button>
+      <button class="live" data-help="live" aria-label="Estado dos dados"><span class="dot" id="dot"></span><span id="liveTxt">A ligar…</span></button>
+      <span class="clock" id="clock" title="Hora de Lisboa">--:--</span>
+      <button class="thm" id="thmBtn" aria-label="Alternar entre tema claro e escuro" title="Tema claro ou escuro"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="tape" aria-label="Cotações"><div class="tape-track" id="tape"><span class="tape-item muted">A carregar cotações…</span></div></div>
+
+<main class="wrap first" id="main">
+
+  <!-- INÍCIO -->
+  <section class="view home" id="v-inicio" hidden>
+    <div class="hm-hero">
+      <div class="hm-copy">
+        <h1 class="hm-h1" aria-label="Investir, sem mistério."><span class="w" style="--i:0" aria-hidden="true">Investir,</span><span class="w mk" style="--i:1" aria-hidden="true">sem</span><span class="w mk" style="--i:2" aria-hidden="true">mistério.</span></h1>
+        <p class="hm-lead">Aprende do zero, com gráficos que mexes com as mãos e só com o que é possível em Portugal.</p>
+        <div class="hm-cta"><button class="btn primary lg" data-go="aprender">Começar a aprender</button><button class="btn lg" id="hmMap">Ver todos os temas</button></div>
+      </div>
+      <div class="hm-art">
+        <div class="hm-num"><b id="hmN">0 €</b><small>100 € por mês durante 20 anos, a 5% ao ano (exemplo). Depositaste <span id="hmPaid"></span>.</small></div>
+        <div id="hmArt"></div>
+      </div>
+    </div>
+    <div class="hm-marquee" data-loop role="region" aria-label="Factos sobre investir em Portugal"><div class="hm-mq-track" id="hmMq"></div></div>
+    <section class="gl" id="glSec" aria-labelledby="glH">
+      <div class="gl-head"><h2 id="glH" class="rv">De onde vêm os ativos</h2><p class="gl-sub rv">Cada ativo no seu mercado de referência: onde cota ou é entregue. Arrasta o globo, escolhe um sítio e abre o ativo.</p></div>
+      <div class="gl-grid">
+        <div class="gl-stage" id="glStage">
+          <canvas id="glCv" role="img" aria-label="Globo terrestre com os mercados de referência dos ativos do Invest101: Nova Iorque, Washington, Frankfurt, Lisboa, Londres, Tóquio e outros. A lista ao lado tem a mesma informação."></canvas>
+          <div class="gl-chips" id="glChips"></div>
+          <div class="gl-ctl"><button class="btn sm" data-gz="-" aria-label="Afastar">−</button><button class="btn sm" data-gz="+" aria-label="Aproximar">+</button><button class="btn sm" data-gv="americas">Américas</button><button class="btn sm" data-gv="eurafrica">Europa e África</button><button class="btn sm" data-gv="asiaoceania">Ásia e Oceânia</button></div>
+        </div>
+        <aside class="gl-side" aria-label="Lista dos mercados no globo">
+          <div class="seg gl-layers" id="glLayers" role="group" aria-label="Camada do globo"><button data-layer="mk" aria-pressed="true">Mercados</button><button data-layer="etf" aria-pressed="false">Domicílio dos ETFs</button></div>
+          <div class="gl-list" id="glList"></div>
+          <div class="gl-card" id="glCard" aria-live="polite"></div>
+        </aside>
+      </div>
+    </section>
+    <section class="hs" id="hmStory" data-scrub="pin" aria-label="Um euro a crescer, em quatro cenas">
+      <div class="hs-stage" data-sc="0">
+        <div class="hs-cap">
+          <p class="hs-t" data-s="0">Tens 1 000 €.<small>Estão na tua conta. Parece seguro.</small></p>
+          <p class="hs-t" data-s="1">Parado, perde valor.<small id="hsS1"></small></p>
+          <p class="hs-t" data-s="2">Investido, cresce.<small id="hsS2"></small></p>
+          <p class="hs-t" data-s="3">Mas só com o que existe em Portugal.<small>O VOO e o SPY não se compram cá. Os ETFs UCITS, sim.</small></p>
+        </div>
+        <div class="hs-fig" aria-hidden="true">
+          <svg viewBox="0 0 600 560">
+            <line x1="20" x2="580" y1="470" y2="470" stroke="var(--sf)" stroke-width="4"/>
+            <g id="hsCoin"><circle r="130" fill="var(--yellow)" stroke="#16120E" stroke-width="5"/><circle r="100" fill="none" stroke="#16120E" stroke-width="3" stroke-dasharray="3 12" stroke-linecap="round"/><text id="hsVal" y="16" text-anchor="middle" font-family="Unbounded,sans-serif" font-weight="900" font-size="38" fill="#16120E" letter-spacing="-2">1 000 €</text></g>
+            <g id="hsStamps" opacity="0"><g transform="translate(300 380)"><rect x="-210" y="-42" width="200" height="84" rx="6" fill="#FFFAEB" stroke="#16120E" stroke-width="4"/><text x="-110" y="12" text-anchor="middle" font-family="Unbounded,sans-serif" font-weight="900" font-size="36" fill="#16120E">VOO</text><path d="M-200 30L-20 -30" stroke="var(--red)" stroke-width="7" stroke-linecap="round"/></g><g transform="translate(300 380)"><rect x="10" y="-42" width="200" height="84" rx="6" fill="var(--yellow)" stroke="#16120E" stroke-width="4"/><text x="110" y="12" text-anchor="middle" font-family="Unbounded,sans-serif" font-weight="900" font-size="32" fill="#16120E">UCITS</text></g></g>
+          </svg>
+        </div>
+      </div>
+    </section>
+    <section class="hm-sec" id="hmMapSec">
+      <h2 class="rv">Tudo o que há para aprender</h2>
+      <p class="hm-sub rv">Abre o tema que quiseres, pela ordem que quiseres. Nada está trancado. O que ainda não está escrito diz-se logo: só entra com fonte oficial.</p>
+      <div class="hm-tiles" id="hmTiles"></div>
+    </section>
+    <section class="hm-sec">
+      <h2 class="rv">Experimenta antes de ler</h2>
+      <p class="hm-sub rv">Mexe nos controlos e vê o que o tempo faz ao dinheiro.</p>
+      <div class="lrn-w hm-try rv" id="hmTry"></div>
+    </section>
+    <section class="hm-pt rv">
+      <div>
+        <h2>Só o que se pode fazer em Portugal.</h2>
+        <p>Quando um produto não se compra cá, dizemo-lo e mostramos a versão que se compra, com o código ISIN e a fonte.</p>
+        <button class="btn lg" data-mod="produtos">Ver o exemplo do S&amp;P 500</button>
+      </div>
+      <div class="hm-vs">
+        <div class="no"><b>VOO</b><span>ETF americano: não se compra em Portugal</span></div>
+        <div class="no"><b>SPY</b><span>ETF americano: não se compra em Portugal</span></div>
+        <div><b>IE00B5BMR087</b><span>iShares Core S&amp;P 500 UCITS (Acc)</span></div>
+        <div><b>IE00BFMXXD54</b><span>Vanguard S&amp;P 500 UCITS (Acc)</span></div>
+      </div>
+    </section>
+    <section class="hm-mk rv">
+      <div><h2>E os mercados, como vão hoje?</h2><p>Cotações, gráficos, calendário económico e análise, à mão para quando quiseres acompanhar.</p></div>
+      <button class="btn primary lg" data-go="painel">Abrir o painel de mercados</button>
+    </section>
+    <div class="hm-big" data-loop aria-hidden="true"><div class="hm-big-track" id="hmBig"></div></div>
+  </section>
+
+  <!-- APRENDER -->
+  <section class="view" id="v-aprender" hidden>
+    <div class="vh"><div><h1>Aprender</h1><p>Tudo aberto, na ordem que quiseres. Cada tema tem gráficos que podes mexer e só diz o que é possível em Portugal.</p></div><div class="lrn-prog" id="lrnProg"></div></div>
+    <div class="lrn-bar"><div id="lrnTopics" role="group" aria-label="Filtrar por assunto"></div><input class="inp search" id="lrnQ" type="search" placeholder="Procurar um tema" aria-label="Procurar um tema" autocomplete="off"></div>
+    <div class="g lrn-g">
+      <section class="panel lrn-listp" aria-label="Temas"><div class="ph"><h2>Temas</h2><span class="meta" id="lrnCount"></span></div><div class="lrn-rows" id="lrnRows" role="list"></div><div class="lrn-soon" id="lrnSoon"></div></section>
+      <article class="panel lrn-read" id="lrnRead" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <!-- PAINEL -->
+  <section class="view" id="v-painel">
+    <section class="panel regime">
+      <div>
+        <h1 id="regTitle">Leitura do regime de mercado</h1>
+        <p class="lede" id="regText">A leitura do dia aparece quando os dados chegam.</p>
+        <p class="rg-date" id="heroDate" style="margin-top:8px"></p>
+      </div>
+      <div class="acts">
+        <button class="btn primary" data-go="calendario">Abrir o calendário</button>
+        <button class="btn" data-go="mercados">Abrir os gráficos</button>
+        <button class="link" data-help="regime">O que é o regime?</button>
+      </div>
+    </section>
+
+    <div class="mcards" id="mcards" aria-label="Resumo de mercados"></div>
+
+    <div class="kstrip">
+      <div class="tile next" id="nextBox"><span class="lab">Próximo evento de alto impacto</span><span class="big">n/d</span><span class="muted">Sem eventos agendados.</span></div>
+      <div class="tile"><span class="lab">Eventos hoje</span><b class="kn" id="k1">n/d</b></div>
+      <div class="tile"><span class="lab">Já divulgados</span><b class="kn" id="k2">n/d</b></div>
+      <div class="tile"><span class="lab">Surpresas</span><b class="kn" id="k3">n/d</b></div>
+    </div>
+
+    <div class="g g-84 eq">
+      <section class="panel">
+        <div class="ph"><h2>Mapa de calor <button class="help" data-help="heat" aria-label="Ajuda: mapa de calor">?</button></h2><span class="meta">variação de hoje, em desvios-padrão</span></div>
+        <div class="heat-wrap" id="heat"><div class="empty">O mapa aparece quando chegam as cotações.</div></div>
+        <div class="heat-leg"><span>desce</span><i aria-hidden="true"></i><span>sobe</span></div>
+      </section>
+      <div class="stack">
+        <section class="panel">
+          <div class="ph"><h2>Apetite pelo risco <button class="help" data-help="risk" aria-label="Ajuda: apetite pelo risco">?</button></h2><span class="meta">5 sessões, aproximação</span></div>
+          <div class="pb" id="riskBox"><div class="empty">Calculado a partir do histórico de preços.</div></div>
+        </section>
+        <section class="panel">
+          <div class="ph"><h2>Movimentos fora do normal <button class="help" data-help="movers" aria-label="Ajuda: movimentos">?</button></h2><span class="meta">hoje, em σ</span></div>
+          <div id="movers"><div class="pb"><div class="empty">Sem cotações.</div></div></div>
+        </section>
+      </div>
+    </div>
+
+    <div class="g g-84">
+      <section class="panel">
+        <div class="ph"><h2>Mercados <button class="help" data-help="quotes" aria-label="Ajuda: cotações">?</button></h2><button class="link" data-go="analise">Tabela completa</button></div>
+        <div class="tw"><table class="dt" id="board"><tbody><tr><td><span class="sk" style="width:62%"></span></td></tr><tr><td><span class="sk" style="width:48%"></span></td></tr><tr><td><span class="sk" style="width:70%"></span></td></tr><tr><td><span class="sk" style="width:40%"></span></td></tr><tr><td><span class="sk" style="width:56%"></span></td></tr><tr><td><span class="sk" style="width:66%"></span></td></tr></tbody></table></div>
+      </section>
+      <section class="panel">
+        <div class="ph"><h2>Agenda de hoje <button class="help" data-help="calendar" aria-label="Ajuda: calendário">?</button></h2><button class="link" data-go="calendario">Ver tudo</button></div>
+        <div class="rows" id="todo"><div class="row" style="display:block"><span class="sk" style="width:70%"></span><span class="sk" style="width:46%;margin-top:8px"></span></div><div class="row" style="display:block"><span class="sk" style="width:52%"></span><span class="sk" style="width:28%;margin-top:8px"></span></div><div class="row" style="display:block"><span class="sk" style="width:64%"></span><span class="sk" style="width:40%;margin-top:8px"></span></div></div>
+      </section>
+    </div>
+
+    <div class="g g-84 eq">
+      <section class="panel">
+        <div class="ph"><h2>O dia em 24 horas <button class="help" data-help="sessions" aria-label="Ajuda: sessões">?</button></h2><span class="meta" id="tlMeta">Hora de Lisboa</span></div>
+        <div class="pb"><div class="tl-wrap" id="timeline"><div class="empty">As sessões e os eventos do dia aparecem aqui.</div></div></div>
+      </section>
+      <section class="panel">
+        <div class="ph"><h2>Balanço de surpresas <button class="help" data-help="surpidx" aria-label="Ajuda: balanço de surpresas">?</button></h2><span class="meta">últimos 7 dias</span></div>
+        <div class="pb" id="surpIdx"><div class="empty">Sem divulgações recentes.</div></div>
+      </section>
+    </div>
+  </section>
+
+  <!-- RADAR -->
+  <section class="view" id="v-radar" hidden>
+    <div class="vh"><div><h1>O meu radar</h1><p>Escolha os mercados que quer seguir. Quanto mais longe do centro, mais invulgar é o movimento de hoje.</p></div><span class="muted" id="rdMode"></span></div>
+    <div class="g rd">
+      <section class="panel rd-stage">
+        <div class="radar wide" id="radarBig"><div class="glow"></div><div class="sweep"></div><div class="rpulse"></div><svg id="radar2" viewBox="0 0 400 400" role="img" aria-label="O meu radar: movimento de hoje de cada mercado escolhido"></svg><div class="rtip" id="rtip" hidden></div><div class="rd-empty" id="rdEmpty"></div></div>
+      </section>
+      <div class="stack">
+        <section class="panel">
+          <div class="ph"><h2>No radar <button class="help" data-help="movers" aria-label="Ajuda: como ler o radar">?</button></h2><span style="display:flex;gap:12px;align-items:center"><span class="meta" id="rdCount"></span><button class="link" id="rdClear" hidden>Limpar</button></span></div>
+          <div id="rdList"></div>
+        </section>
+        <section class="panel">
+          <div class="ph"><h2>Adicionar ativos</h2><span class="meta">toque para adicionar ou retirar</span></div>
+          <div class="filters"><input class="inp search" id="rdQ" type="search" placeholder="Procurar ativo ou classe" aria-label="Procurar ativo"></div>
+          <div class="pb" id="rdPick"></div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDÁRIO -->
+  <section class="view" id="v-calendario" hidden>
+    <div class="vh"><div><h1>Calendário económico</h1><p>O que sai, quando, e que mercados tende a mexer.</p></div><span class="muted" id="calMeta"></span></div>
+    <section class="panel">
+      <div class="ph" style="padding-bottom:12px">
+        <div class="seg" role="group" aria-label="Período" id="fPeriod">
+          <button data-p="yesterday" aria-pressed="false">Ontem</button>
+          <button data-p="today" aria-pressed="true">Hoje</button>
+          <button data-p="tomorrow" aria-pressed="false">Amanhã</button>
+          <button data-p="week" aria-pressed="false">Esta semana</button>
+          <button data-p="next" aria-pressed="false">Próxima</button>
+          <button data-p="all" aria-pressed="false">Tudo</button>
+        </div>
+        <button class="help" data-help="calendar" aria-label="Ajuda: como ler o calendário">?</button>
+      </div>
+      <div class="filters">
+        <input class="inp search" id="q" type="search" placeholder="Procurar evento ou país (IPC, Portugal, payroll…)" aria-label="Procurar evento">
+        <div class="seg" role="group" aria-label="Importância" id="fImp">
+          <button data-i="1" aria-pressed="true">Baixa</button>
+          <button data-i="2" aria-pressed="true">Média</button>
+          <button data-i="3" aria-pressed="true">Alta</button>
+        </div>
+        <div class="seg" role="group" aria-label="Estado" id="fState">
+          <button data-s="all" aria-pressed="true">Todos</button>
+          <button data-s="out" aria-pressed="false">Saídos</button>
+          <button data-s="surp" aria-pressed="false">Surpresas</button>
+          <button data-s="up" aria-pressed="false">Por sair</button>
+        </div>
+        <select class="inp" id="fCat" aria-label="Categoria">
+          <option value="">Todas as categorias</option>
+          <option value="I">Inflação</option><option value="E">Emprego</option><option value="A">Atividade</option>
+          <option value="C">Bancos centrais e discursos</option><option value="S">Confiança e sentimento</option>
+          <option value="B">Balança, energia e fluxos</option><option value="K">Crédito e moeda</option><option value="O">Leilões de dívida</option>
+        </select>
+      </div>
+      <div class="chips" id="fCur" aria-label="Moedas"></div>
+      <div class="week" id="week" role="group" aria-label="Dias da semana"></div>
+      <div class="sumbar" id="sum"></div>
+      <div class="calgrid">
+        <div class="callist"><div class="calcols" aria-hidden="true"><span>Hora</span><span>Moeda</span><span>Evento</span><span>Atual</span><span>Previsão</span><span>Anterior</span></div><div class="list rows" id="list"><div class="pb" style="padding-top:16px"><div class="empty">Os eventos aparecem quando os dados chegam.</div></div></div></div>
+        <aside class="read" id="read" aria-live="polite"></aside>
+      </div>
+    </section>
+  </section>
+
+  <!-- MERCADOS: terminal de gráficos -->
+  <section class="view" id="v-mercados" hidden>
+    <div class="term">
+      <div class="term-main">
+        <section class="panel chartpanel">
+          <div class="ahead">
+            <div class="ahead-id"><h2 id="aName">n/d</h2><p id="aNote" hidden></p><div class="ahead-meta" id="aAge"></div></div>
+            <div class="ahead-px"><div class="big" id="aPrice">n/d</div><div class="num" id="aChg"></div></div>
+          </div>
+          <div class="ctl">
+            <div class="ctl-row">
+              <div class="seg" role="group" aria-label="Intervalo de cada vela" id="tfSeg" hidden><button data-tf="m15" aria-pressed="false">15m</button><button data-tf="h1" aria-pressed="false">1h</button><button data-tf="d1" aria-pressed="true">1D</button><button data-tf="w1" aria-pressed="false">1S</button></div><div class="seg" role="group" aria-label="Intervalo do gráfico" id="rng">
+                <button data-r="7" aria-pressed="false">1S</button><button data-r="31" aria-pressed="false">1M</button><button data-r="92" aria-pressed="true">3M</button><button data-r="999" aria-pressed="false">6M</button>
+              </div><span class="sepv" aria-hidden="true"></span><div class="seg" role="group" aria-label="Tipo de gráfico" id="ctSeg"><button data-ct="line" aria-pressed="true">Linha</button><button data-ct="candle" aria-pressed="false">Velas</button></div><span class="sepv" aria-hidden="true"></span>
+              <button class="ibtn" id="indBtn" aria-haspopup="dialog" aria-expanded="false" aria-controls="indPop" hidden><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18c3-1 4-9 7-9s3 6 6 6 3-8 5-9"/><path d="M3 21h18" opacity=".5"/></svg><span>Indicadores</span><b id="indN" hidden></b><svg class="ic ibtn-car" viewBox="0 0 256 256" aria-hidden="true"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></svg></button>
+              <div class="tgs" role="group" aria-label="Médias móveis" id="maSeg"><button class="tg" data-ma="20" aria-pressed="true" title="Média móvel dos últimos 20 fechos"><i class="tg-ln" style="--sw:var(--c1)"></i>MM20</button><button class="tg" data-ma="50" aria-pressed="false" title="Média móvel dos últimos 50 fechos"><i class="tg-ln" style="--sw:var(--c2)"></i>MM50</button></div>
+              <div class="tgs" role="group" aria-label="Sessões de mercado" id="ssSeg" hidden><button class="tg" aria-pressed="true" title="Divide o gráfico pelas sessões da Ásia, da Europa e da América"><i class="tg-ss" aria-hidden="true"><i></i><i></i><i></i></i>Sessões</button></div>
+              <div class="cmpbar" id="cmpA"></div>
+              <button class="kbtn" id="kBtn" aria-pressed="false" hidden title="Estende o gráfico com a previsão do modelo Kronos"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17.5l5-6 4 3"/><path d="M11.5 14.5l3.5-5 3 1.5 3.5-6" stroke-dasharray="1 3.6"/></svg><span>Previsão Kronos</span></button><button class="help" data-help="chart" aria-label="Ajuda: gráfico">?</button>
+            </div>
+          </div>
+          <div class="ipop" id="indPop" role="dialog" aria-label="Indicadores do gráfico" tabindex="-1" hidden></div>
+          <div class="chartwrap">
+            <div class="ztool" id="ztool" role="group" aria-label="Zoom e deslocamento" hidden><button data-z="in" aria-label="Aproximar" title="Aproximar"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></svg></button><button data-z="out" aria-label="Afastar" title="Afastar"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"/></svg></button><button data-z="left" aria-label="Recuar no tempo" title="Recuar no tempo"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"/></svg></button><button data-z="right" aria-label="Avançar no tempo" title="Avançar no tempo"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></svg></button><button data-z="end" aria-label="Voltar ao mais recente" title="Voltar ao mais recente"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M189.66,122.34a8,8,0,0,1,0,11.32l-72,72a8,8,0,0,1-11.32-11.32L164.69,136H32a8,8,0,0,1,0-16H164.69L106.34,61.66a8,8,0,0,1,11.32-11.32ZM216,32a8,8,0,0,0-8,8V216a8,8,0,0,0,16,0V40A8,8,0,0,0,216,32Z"/></svg></button></div>
+            <div class="chartbox" id="chartbox"><div class="clg" id="clg" aria-hidden="true"></div><svg id="chart" height="300" role="img" aria-label="Gráfico de preço"></svg><div class="tip" id="tip"></div></div>
+          </div>
+          <div class="rangebar" id="rangebar" hidden><div class="seg" role="group" aria-label="Quanto histórico mostrar" id="qr"></div><span class="rb-r" id="rbR"></span></div>
+          <div class="legend"><span class="lg-ev" id="eLeg"><b>Eventos de alto impacto</b><span><i style="background:var(--up)"></i>puxou para cima</span><span><i style="background:var(--down)"></i>puxou para baixo</span><span><i style="background:var(--warn)"></i>por sair</span></span><span id="iLeg" style="display:contents"></span><span id="sLeg" hidden><i class="zsw" style="background:var(--s-asia)"></i><i class="zsw" style="background:var(--s-eu)"></i><i class="zsw" style="background:var(--s-us)"></i>Sessões de Tóquio, Londres e Nova Iorque</span><span id="vLeg" hidden><i class="vbar"></i>Volume de cada vela</span><span id="kLeg" hidden><i class="ln kln"></i>Previsão média <i class="kband"></i>50% e 80% das trajetórias<b id="kFlag"></b></span></div>
+          <div class="stats" id="stats"></div>
+          <p class="afoot" id="cNote" hidden></p>
+        </section>
+        <section class="panel">
+          <div class="ph"><h2>Resumo técnico <button class="help" data-help="tech" aria-label="Ajuda: resumo técnico">?</button></h2><span class="meta">sobre fechos diários</span></div>
+          <div id="tgauge"></div>
+          <div class="tech" id="tech"></div>
+        </section>
+        <div class="g g-2">
+          <section class="panel"><div class="ph"><h2>O que o move <button class="help" data-help="sens" aria-label="Ajuda: sensibilidade">?</button></h2></div><div class="pb"><div class="bars" id="aBars"></div></div></section>
+          <section class="panel"><div class="ph"><h2>Anda com… <button class="help" data-help="corr" aria-label="Ajuda: correlação">?</button></h2><span class="meta">correlação a 60 dias</span></div><div class="pb"><div class="bars" id="aCorr"></div></div></section>
+          <section class="panel"><div class="ph"><h2>Próximos eventos</h2></div><div id="aWatch"></div></section>
+          <section class="panel"><div class="ph"><h2>Surpresas recentes <button class="help" data-help="surprise" aria-label="Ajuda: surpresas">?</button></h2></div><div id="aRecent"></div></section>
+        </div>
+      </div>
+      <aside class="panel picker" id="picker" aria-label="Lista de vigilância"><div class="pb pk-empty"><div class="empty">Sem cotações.</div></div></aside>
+    </div>
+  </section>
+
+  <!-- ANÁLISE -->
+  <section class="view" id="v-analise" hidden>
+    <div class="vh"><div><h1>Análise entre mercados</h1><p>Tudo calculado sobre os fechos diários dos últimos seis meses. Clique num ativo para abrir a ficha.</p></div></div>
+    <section class="panel">
+      <div class="ph"><h2>Desempenho e volatilidade <button class="help" data-help="screen" aria-label="Ajuda: tabela de desempenho">?</button></h2><span class="meta">clique num cabeçalho para ordenar</span></div>
+      <div class="tw"><table class="dt" id="screen"></table></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h2>Comparar ativos <button class="help" data-help="compare" aria-label="Ajuda: comparar">?</button></h2>
+        <div class="seg" role="group" aria-label="Intervalo da comparação" id="cmpRng"><button data-c="31" aria-pressed="false">1M</button><button data-c="92" aria-pressed="true">3M</button><button data-c="999" aria-pressed="false">6M</button></div>
+      </div>
+      <div class="pb"><div class="cmp-leg" id="cmpLeg"></div></div>
+      <div class="chartbox" id="cmpBox" style="margin-top:0;margin-bottom:16px"><svg id="cmp" height="280" role="img" aria-label="Desempenho comparado, base 100"></svg><div class="tip" id="cmpTip"></div></div>
+    </section>
+    <section class="panel">
+      <div class="ph"><h2>Correlações <button class="help" data-help="corr" aria-label="Ajuda: correlação">?</button></h2>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <span class="legend" style="padding:0"><span><span class="sw" style="background:color-mix(in srgb,var(--neg) 60%,var(--surface))"></span>movem-se ao contrário</span><span><span class="sw" style="background:var(--sunk)"></span>sem relação</span><span><span class="sw" style="background:color-mix(in srgb,var(--pos) 60%,var(--surface))"></span>movem-se juntos</span></span>
+          <div class="seg" role="group" aria-label="Janela da correlação" id="corWin"><button data-w="20" aria-pressed="false">20 d</button><button data-w="60" aria-pressed="true">60 d</button><button data-w="120" aria-pressed="false">120 d</button></div>
+        </div>
+      </div>
+      <div class="mx-wrap"><table class="mx" id="cor"></table></div>
+    </section>
+    <div class="g g-2">
+      <section class="panel">
+        <div class="ph"><h2>Força das moedas <button class="help" data-help="fxs" aria-label="Ajuda: força das moedas">?</button></h2>
+          <div class="seg" role="group" aria-label="Janela da força" id="fxWin"><button data-f="7" aria-pressed="true">1S</button><button data-f="30" aria-pressed="false">1M</button><button data-f="91" aria-pressed="false">3M</button></div>
+        </div>
+        <div class="pb"><div class="bars" id="fxs"></div></div>
+        <p class="pnote">Só cinco moedas: USD, EUR, GBP, JPY e CAD. Não há dados para AUD, NZD e CHF.</p>
+      </section>
+      <section class="panel">
+        <div class="ph"><h2>Spreads e rácios <button class="help" data-help="spreads" aria-label="Ajuda: spreads">?</button></h2><span class="meta">valor · 1 mês · posição em 6 meses</span></div>
+        <div id="spreads"></div>
+      </section>
+    </div>
+    <section class="panel">
+      <div class="ph"><h2>Sensibilidade a eventos <button class="help" data-help="matrix" aria-label="Ajuda: matriz">?</button></h2>
+        <span class="legend" style="padding:0"><span><span class="sw" style="background:color-mix(in srgb,var(--down) 45%,var(--surface))"></span>desce</span><span><span class="sw" style="background:var(--sunk)"></span>neutro</span><span><span class="sw" style="background:color-mix(in srgb,var(--up) 45%,var(--surface))"></span>sobe</span></span>
+      </div>
+      <p class="pnote">Como reage cada ativo quando um dado sai acima do esperado, ou quando um banco central soa mais duro. É o modelo qualitativo que alimenta a leitura do calendário.</p>
+      <div class="mx-wrap"><table class="mx" id="mx"></table></div>
+    </section>
+  </section>
+
+  <!-- FERRAMENTAS -->
+  <section class="view" id="v-ferramentas" hidden>
+    <div class="vh"><div><h1>Ferramentas</h1><p>Calculadoras para dimensionar e planear uma operação. Os resultados atualizam à medida que escreve.</p></div></div>
+    <div class="g g-2">
+      <section class="panel tool" id="t-pos">
+        <div class="ph"><h2>Tamanho da posição <button class="help" data-help="tpos" aria-label="Ajuda: tamanho da posição">?</button></h2></div>
+        <div class="pb">
+          <div class="form">
+            <div class="fld"><label for="psBal">Saldo da conta</label><input class="inp" id="psBal" inputmode="decimal" value="10000"></div>
+            <div class="fld"><label for="psAcc">Moeda da conta</label><select class="inp" id="psAcc"><option>EUR</option><option>USD</option></select></div>
+            <div class="fld"><label for="psRisk">Risco por operação (%)</label><input class="inp" id="psRisk" inputmode="decimal" value="1"></div>
+            <div class="fld"><label for="psInst">Instrumento</label><select class="inp" id="psInst"></select></div>
+            <div class="fld"><label for="psEntry">Entrada</label><input class="inp" id="psEntry" inputmode="decimal"></div>
+            <div class="fld"><label for="psStop">Stop</label><input class="inp" id="psStop" inputmode="decimal"></div>
+            <div class="fld"><label for="psRate" id="psRateL">Taxa de conversão</label><input class="inp" id="psRate" inputmode="decimal"></div>
+            <div class="fld"><label for="psLev">Alavancagem (1:x)</label><input class="inp" id="psLev" inputmode="decimal" value="30"></div>
+          </div>
+          <div class="out" id="psOut"></div>
+          <p class="msg" id="psMsg"></p>
+        </div>
+      </section>
+      <section class="panel tool" id="t-rr">
+        <div class="ph"><h2>Risco e retorno <button class="help" data-help="trr" aria-label="Ajuda: risco e retorno">?</button></h2></div>
+        <div class="pb">
+          <div class="form">
+            <div class="fld"><label for="rrEntry">Entrada</label><input class="inp" id="rrEntry" inputmode="decimal" value="1.1280"></div>
+            <div class="fld"><label for="rrStop">Stop</label><input class="inp" id="rrStop" inputmode="decimal" value="1.1240"></div>
+            <div class="fld"><label for="rrTgt">Objetivo</label><input class="inp" id="rrTgt" inputmode="decimal" value="1.1380"></div>
+            <div class="fld"><label for="rrWin">Taxa de acerto (%)</label><input class="inp" id="rrWin" inputmode="decimal" value="45"></div>
+          </div>
+          <div class="out" id="rrOut"></div>
+          <p class="msg" id="rrMsg"></p>
+        </div>
+      </section>
+      <section class="panel tool" id="t-piv">
+        <div class="ph"><h2>Pontos pivot <button class="help" data-help="tpiv" aria-label="Ajuda: pontos pivot">?</button></h2><span class="meta">máximo, mínimo e fecho da sessão anterior</span></div>
+        <div class="pb">
+          <div class="form">
+            <div class="fld"><label for="pvH">Máximo</label><input class="inp" id="pvH" inputmode="decimal" value="1.1320"></div>
+            <div class="fld"><label for="pvL">Mínimo</label><input class="inp" id="pvL" inputmode="decimal" value="1.1235"></div>
+            <div class="fld"><label for="pvC">Fecho</label><input class="inp" id="pvC" inputmode="decimal" value="1.1282"></div>
+          </div>
+          <div class="tw"><table class="lv" id="pvOut"></table></div>
+          <p class="msg" id="pvMsg">O Radar Macro só tem fechos diários, por isso o máximo e o mínimo têm de vir da sua plataforma.</p>
+        </div>
+      </section>
+      <section class="panel tool" id="t-fib">
+        <div class="ph"><h2>Níveis de Fibonacci <button class="help" data-help="tfib" aria-label="Ajuda: Fibonacci">?</button></h2></div>
+        <div class="pb">
+          <div class="form">
+            <div class="fld"><label for="fbH">Máximo do movimento</label><input class="inp" id="fbH" inputmode="decimal" value="1.1800"></div>
+            <div class="fld"><label for="fbL">Mínimo do movimento</label><input class="inp" id="fbL" inputmode="decimal" value="1.1250"></div>
+            <div class="fld"><label for="fbDir">Sentido do movimento</label><select class="inp" id="fbDir"><option value="up">Subida (do mínimo ao máximo)</option><option value="down">Descida (do máximo ao mínimo)</option></select></div>
+            <div class="fld"><label for="fbAsset">Preencher com um ativo</label><select class="inp" id="fbAsset"><option value="">Escolher…</option></select></div>
+          </div>
+          <div class="tw"><table class="lv" id="fbOut"></table></div>
+          <p class="msg" id="fbMsg"></p>
+        </div>
+      </section>
+      <section class="panel tool" id="t-dd">
+        <div class="ph"><h2>Perdas e recuperação <button class="help" data-help="tdd" aria-label="Ajuda: perdas e recuperação">?</button></h2></div>
+        <div class="pb">
+          <div class="form">
+            <div class="fld"><label for="ddRisk">Risco por operação (%)</label><input class="inp" id="ddRisk" inputmode="decimal" value="1"></div>
+            <div class="fld"><label for="ddN">Perdas seguidas</label><input class="inp" id="ddN" inputmode="numeric" value="8"></div>
+            <div class="fld"><label for="ddLoss">Ou uma perda total de (%)</label><input class="inp" id="ddLoss" inputmode="decimal" placeholder="ex.: 20"></div>
+          </div>
+          <div class="out" id="ddOut"></div>
+          <div class="tw"><table class="lv" id="ddTab"></table></div>
+        </div>
+      </section>
+      <section class="panel tool" id="t-pip">
+        <div class="ph"><h2>Valor do pip <button class="help" data-help="tpip" aria-label="Ajuda: valor do pip">?</button></h2><span class="meta">por lote padrão, com as cotações atuais</span></div>
+        <div class="tw"><table class="dt" id="pipTab"></table></div>
+        <p class="pnote" style="padding-top:10px">1 lote padrão = 100 000 unidades da moeda base. Um mini lote vale um décimo, um micro lote um centésimo.</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- DIÁRIO -->
+  <section class="view" id="v-diario" hidden>
+    <div class="vh"><div><h1>Diário de operações</h1><p>Registe cada operação com entrada, stop e saída. O resultado é medido em R, múltiplos do risco inicial.</p></div><span class="muted" id="jMode"></span></div>
+    <section class="panel">
+      <div class="jstats" id="jStats"></div>
+    </section>
+    <div class="g g-84">
+      <section class="panel">
+        <div class="ph"><h2>Curva de resultados <button class="help" data-help="journal" aria-label="Ajuda: diário">?</button></h2><span class="meta">R acumulado, por ordem de data</span></div>
+        <div class="chartbox" id="eqBox" style="margin-top:0;margin-bottom:16px"><svg id="eq" height="220" role="img" aria-label="Curva de resultados em R"></svg></div>
+      </section>
+      <section class="panel tool">
+        <div class="ph"><h2>Nova operação</h2></div>
+        <form class="pb" id="jForm" novalidate>
+          <div class="form">
+            <div class="fld"><label for="jDate">Data</label><input class="inp" id="jDate" type="date"></div>
+            <div class="fld"><label for="jAsset">Ativo</label><input class="inp txt" id="jAsset" list="jAssets" placeholder="EUR/USD"><datalist id="jAssets"></datalist></div>
+            <div class="fld"><label for="jDir">Direção</label><select class="inp" id="jDir"><option value="1">Longo (compra)</option><option value="-1">Curto (venda)</option></select></div>
+            <div class="fld"><label for="jEntry">Entrada</label><input class="inp" id="jEntry" inputmode="decimal"></div>
+            <div class="fld"><label for="jStop">Stop inicial</label><input class="inp" id="jStop" inputmode="decimal"></div>
+            <div class="fld"><label for="jExit">Saída</label><input class="inp" id="jExit" inputmode="decimal"></div>
+            <div class="fld" style="grid-column:1 / -1"><label for="jNote">Plano e notas</label><input class="inp txt" id="jNote" maxlength="240" placeholder="Porque entrou, o que correu bem ou mal"></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button class="btn primary" type="submit">Registar operação</button><span class="msg" id="jMsg"></span></div>
+        </form>
+      </section>
+    </div>
+    <section class="panel">
+      <div class="ph"><h2>Operações</h2><button class="btn sm" id="jCopy" hidden>Copiar como CSV</button></div>
+      <div class="tw"><table class="dt" id="jTab"></table></div>
+      <div class="pb" id="jEmpty"><div class="empty">Ainda não há operações. Registe a primeira no formulário: a curva de resultados, a taxa de acerto e a expectativa aparecem a partir daí.</div></div>
+    </section>
+  </section>
+
+  <!-- METODOLOGIA -->
+  <section class="view" id="v-metodo" hidden>
+    <div class="vh"><div><h1>Metodologia</h1><p>De onde vêm os dados, como são calculados os indicadores e onde estão os limites.</p></div></div>
+    <div class="g g-84">
+      <section class="panel">
+        <div class="ph"><h2>Como funciona</h2></div>
+        <div class="pb prose">
+          <p>O Invest101 junta uma biblioteca para aprender a investir em Portugal e uma ferramenta de acompanhamento de mercados, o Radar Macro, da Maré Analytics, um estúdio de análise de mercados em Lisboa. Transforma o calendário económico, com centenas de divulgações por semana, numa leitura simples: o que saiu, o que significa e que mercados podem mexer.</p>
+          <ol>
+            <li><b>Recolha.</b> Lemos todos os eventos do calendário económico da Investing.com, de todos os países e níveis de importância, e as cotações de 24 mercados.</li>
+            <li><b>Leitura.</b> Cada divulgação é comparada com a previsão. Um modelo próprio traduz a surpresa no efeito provável sobre moedas, obrigações, ações, matérias-primas e cripto.</li>
+            <li><b>Atualização.</b> De hora a hora, nos dias úteis entre as 8h e as 22h de Lisboa, os resultados e as cotações entram na página sem ser preciso recarregar.</li>
+          </ol>
+          <h3>Limites</h3>
+          <ul>
+            <li>As cotações chegam com atraso. Não servem para executar ordens.</li>
+            <li>Os gráficos usam velas do Yahoo Finance (15 minutos, 1 hora, 1 dia e 1 semana), gravadas periodicamente. Não são em tempo real: cada gráfico indica quando foi a última atualização. Em velas, as colunas no fundo mostram o volume de cada vela quando o Yahoo o tem (ações, futuros e cripto). O câmbio à vista não tem volume centralizado, por isso nos câmbios as colunas mostram o volume dos futuros correspondentes (CME; ICE no índice do dólar), com falhas nos períodos em que o Yahoo não guarda o contrato. As yields não têm volume. A yield do Bund não está disponível nessa fonte e usa só fechos diários.</li>
+            <li>A previsão Kronos vem de um modelo de inteligência artificial de código aberto, treinado em velas de preços e usado sem treino adicional. Simula várias trajetórias a partir do padrão recente das velas. Testámo-lo sobre dados passados e, tal como sai, é demasiado confiante e não bate a hipótese "o preço fica igual". Por isso a previsão mostrada é calibrada com esses testes: a linha média aproveita só a parte do sinal que o teste justificou e o cone de incerteza segue a volatilidade real do mercado, para que a banda de 80% apanhe cerca de 80% dos casos. Cada previsão indica em quantos testes passados se apoia e quantas vezes acertou na direção. Não conhece notícias, resultados nem o calendário económico e só é recalculada quando as velas são atualizadas.</li>
+            <li>Nos ativos de câmbio, o menu Indicadores do gráfico calcula pivôs, Bollinger, Donchian, lacunas de valor justo (FVG) e as suas inversões (iFVG), média de 200, VWAP, RSI, ADX, MACD e ATR sobre as velas do intervalo escolhido. As lacunas seguem as regras habituais: três velas com intervalo entre a primeira e a terceira, a do meio a fechar para lá da primeira, e tamanho acima da média das lacunas anteriores; valem até uma vela fechar do lado de lá, e é esse fecho que as inverte. As velas diárias dos pares são construídas a partir das de 1 hora, com o dia a fechar às 17h de Nova Iorque, porque o fecho diário do Yahoo nestes pares não é fiável. Os valores não coincidem ao cêntimo com outras plataformas, que usam outras fontes de preços.</li>
+            <li>Os indicadores técnicos, as correlações e a volatilidade são calculados sobre fechos diários de seis meses. Não usam volume, opções nem posicionamento, por isso não mostramos VWAP nem médias de 200 dias.</li>
+            <li>O impacto dos eventos é uma estimativa qualitativa. O mercado pode reagir de outra forma quando já esperava a surpresa.</li>
+            <li>Nada aqui é aconselhamento financeiro.</li>
+          </ul>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="ph"><h2>Fontes</h2></div>
+        <dl class="defs" style="grid-template-columns:minmax(0,1fr)">
+          <dt>Calendário</dt><dd style="padding-left:16px;border-top:0;padding-top:0"><a href="https://pt.investing.com/economic-calendar" target="_blank" rel="noopener">Investing.com</a>, com resultado, previsão e valor anterior.</dd>
+          <dt>Velas dos gráficos</dt><dd style="padding-left:16px;border-top:0;padding-top:0"><a href="https://finance.yahoo.com/" target="_blank" rel="noopener">Yahoo Finance</a>, em quatro intervalos de tempo. A data da última atualização aparece por baixo de cada gráfico.</dd>
+          <dt>Previsão</dt><dd style="padding-left:16px;border-top:0;padding-top:0"><a href="https://github.com/shiyu-coder/Kronos" target="_blank" rel="noopener">Kronos</a>, modelo de código aberto para séries de velas, corrido sobre as velas do Yahoo Finance. Cada gráfico indica quando a previsão foi calculada.</dd>
+          <dt>Cotações</dt><dd style="padding-left:16px;border-top:0;padding-top:0">Fontes públicas, com atraso. Hora da última leitura no topo da página.</dd>
+          <dt>Diário</dt><dd style="padding-left:16px;border-top:0;padding-top:0">As suas operações ficam guardadas em privado, só para a sua conta.</dd>
+        </dl>
+      </section>
+    </div>
+    <section class="panel">
+      <div class="ph"><h2>Como é calculado cada indicador</h2></div>
+      <dl class="defs">
+        <dt>Variações</dt><dd>Diferença entre o último valor e o fecho de há 7, 30, 91 ou 182 dias de calendário. Para as obrigações mostramos a variação da yield em pontos base.</dd>
+        <dt>Volatilidade</dt><dd>Desvio-padrão dos retornos logarítmicos diários das últimas 20 ou 60 sessões, anualizado com √252 (√365 para cripto, que negoceia ao fim de semana). Nas obrigações usamos as variações diárias em pontos base.</dd>
+        <dt>Amplitude esperada</dt><dd>Preço × volatilidade diária a 20 sessões. É o movimento de um desvio-padrão num dia e substitui o ATR, que precisaria de máximos e mínimos.</dd>
+        <dt>RSI 14</dt><dd>Método de Wilder: média simples dos 14 primeiros ganhos e perdas, depois média alisada (anterior × 13 + atual) ÷ 14. Com seis meses de fechos pode diferir ligeiramente de outras plataformas.</dd>
+        <dt>Médias móveis</dt><dd>Médias simples de 20, 50 e 100 fechos. Tendência de alta quando o preço está acima da MM20 e esta acima da MM50; de baixa no caso inverso.</dd>
+        <dt>Desvio à média</dt><dd>(Fecho − MM20) ÷ desvio-padrão de 20 fechos. Acima de +2 ou abaixo de −2 o preço está esticado face à média recente.</dd>
+        <dt>Correlação</dt><dd>Coeficiente de Pearson sobre retornos diários nas datas comuns aos dois ativos. O Nikkei fecha antes da abertura dos EUA, por isso a sua correlação diária com mercados americanos fica subestimada.</dd>
+        <dt>Força das moedas</dt><dd>Retorno de cada moeda contra o dólar, menos a média das cinco, multiplicado por 5 ÷ 4. Equivale à média dos retornos contra as outras quatro.</dd>
+        <dt>Apetite pelo risco</dt><dd>Média das variações a 5 sessões, em desvios-padrão, de S&amp;P 500, Nasdaq 100, Euro Stoxx 50, cobre, Bitcoin e USD/JPY, menos as do dólar e do ouro. É uma aproximação: não inclui VIX nem spreads de crédito.</dd>
+        <dt>Balanço de surpresas</dt><dd>Por moeda, soma das surpresas dos últimos 7 dias (+1 acima, −1 abaixo da previsão) ponderada pela importância. Não é um índice de surpresas económicas no sentido estatístico.</dd>
+        <dt>Resultado em R</dt><dd>(Saída − entrada) ÷ (entrada − stop), com o sinal da direção. Expectativa é a média dos R; fator de lucro é a soma dos ganhos a dividir pela soma das perdas.</dd>
+      </dl>
+    </section>
+  </section>
+</main>
+
+<footer>
+  <span><b>Invest101</b>, com o Radar Macro da Maré Analytics, Lisboa</span>
+  <span>Calendário: <a href="https://pt.investing.com/economic-calendar" target="_blank" rel="noopener">Investing.com</a>. Cotações com atraso. Não é aconselhamento financeiro. Horas de Lisboa.</span>
+</footer>
+
+<div class="pop" id="pop" hidden role="dialog" aria-labelledby="mTitle" tabindex="-1"><button class="xbtn" id="mClose" aria-label="Fechar ajuda"><svg class="ic" viewBox="0 0 256 256" aria-hidden="true"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg></button><h3 id="mTitle"></h3><div id="mBody"></div></div>
+<div class="modal" id="cmdModal" hidden role="dialog" aria-modal="true" aria-label="Procurar">
+  <div class="mbox cmd"><input id="cmdQ" type="search" placeholder="Procurar tema, ativo, evento ou ferramenta" aria-label="Procurar" autocomplete="off"><div class="cmd-list" id="cmdList" role="listbox"></div></div>
+</div>

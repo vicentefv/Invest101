@@ -1,0 +1,55 @@
+{
+ "cfg": {
+  "d1": {
+   "lb": 256,
+   "T": 1.0,
+   "top_p": 0.9,
+   "norm": "level",
+   "vol": false
+  },
+  "h1": {
+   "lb": 256,
+   "T": 1.0,
+   "top_p": 0.9,
+   "norm": "detrend",
+   "vol": false
+  },
+  "w1": {
+   "lb": 128,
+   "T": 1.0,
+   "top_p": 0.9,
+   "norm": "level",
+   "vol": false
+  }
+ },
+ "cal": {
+  "d1": {
+   "n": 99,
+   "lam": 0.0,
+   "s": 1.03,
+   "hit": 0.465,
+   "cov": 0.8,
+   "skill": -0.604,
+   "pin_vs_cone": 0.961
+  },
+  "h1": {
+   "n": 60,
+   "lam": 0.284,
+   "s": 0.938,
+   "hit": 0.483,
+   "cov": 0.797,
+   "skill": -0.052,
+   "pin_vs_cone": 0.917
+  },
+  "w1": {
+   "n": 104,
+   "lam": 0.002,
+   "s": 1.136,
+   "hit": 0.471,
+   "cov": 0.795,
+   "skill": -0.11,
+   "pin_vs_cone": 0.972
+  }
+ },
+ "fitted": "busca.jsonl"
+}
