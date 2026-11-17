@@ -175,7 +175,7 @@ function renderLearnReader(animate){
   if(lrnSt.topic!=='todos'&&!LRN.some(x=>x.topic===lrnSt.topic)){ const m=lrnMod(lrnSt.topic);
     $('lrnRead').innerHTML=`<div class="lrn-body mc-${m.color}${animate?' in':''}"><header class="lrn-head"><div class="lrn-hg">${lrnGlyph(m.glyph)}</div><p class="lrn-mod">${esc(m.name)} · a caminho</p><h2 class="lrn-title">${esc(m.name)}</h2></header><p class="lrn-lead">Este módulo ainda não está escrito. Cada tema só entra com fontes oficiais verificadas para Portugal.</p><ul class="lrn-ul" style="--i:1">${m.soon.map(s=>`<li>${esc(s)}</li>`).join('')}</ul><div class="lrn-foot"><button class="btn primary lg" data-lt="todos">Ver os temas disponíveis</button></div></div>`; return; }
   const a=LRN.find(x=>x.id===lrnSt.sel)||LRN[0]; lrnSt.sel=a.id; const p=lrnProg(),done=!!p.done[a.id],m=lrnMod(a.topic);
-  $('lrnRead').innerHTML=`<div class="lrn-body mc-${m.color}${animate?' in':''}"><header class="lrn-head"><div class="lrn-hg">${lrnGlyph(m.glyph)}</div><p class="lrn-mod">${esc(m.name)} · ${a.mins} min</p><h2 class="lrn-title" data-kin>${esc(a.title)}</h2></header><p class="lrn-lead">${a.lead}</p>${a.blocks.map((b,i)=>lrnBlock(b,a,i)).join('')}${a.src.length?`<div class="lrn-src"><p class="lab">Fontes <span class="pill up">Verificado em ${LRN_VERIFIED}</span></p><ul>${a.src.map(s=>`<li><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.l)}</a></li>`).join('')}</ul></div>`:''}<div class="lrn-foot"><button class="btn ${done?'':'primary'} lg" id="lrnDone" aria-pressed="${done}">${done?'Lido':'Marcar como lido'}</button><span class="lab">${done?'Já contou para a tua sequência.':'Ganha 20 XP e conta para a sequência de hoje.'}</span></div>${(()=>{ const i=LRN.indexOf(a),nx=LRN.slice(i+1).find(x=>x.topic===a.topic)||LRN[i+1]; return nx?`<button class="lrn-next mc-${lrnMod(nx.topic).color}" data-next="${nx.id}"><span>Próximo tema</span><b>${esc(nx.title)}</b></button>`:''; })()}</div>`;
+  $('lrnRead').innerHTML=`<div class="lrn-body mc-${m.color}${animate?' in':''}"><header class="lrn-head"><div class="lrn-hg">${lrnGlyph(m.glyph)}</div><p class="lrn-mod">${esc(m.name)} · ${a.mins} min</p><h2 class="lrn-title" data-kin>${esc(a.title)}</h2></header><p class="lrn-lead">${a.lead}</p>${a.blocks.map((b,i)=>lrnBlock(b,a,i)).join('')}${a.src.length?`<div class="lrn-src"><p class="lab">Fontes <span class="pill up">Verificado em ${LRN_VERIFIED}</span></p><ul>${a.src.map(s=>`<li><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.l)}</a></li>`).join('')}</ul></div>`:''}<div class="lrn-foot"><button class="btn ${done?'':'primary'} lg" id="lrnDone" aria-pressed="${done}">${done?'Lido':'Marcar como lido'}</button><span class="lab">${done?'Já contou para a tua sequência.':'Ganha 20 XP e conta para a sequência de hoje.'}</span></div>${lrnNextHtml(a,p)}</div>`;
   lrnMountWidgets($('lrnRead')); m3Scan($('lrnRead')); }
 function renderLearn(){
   if(!lrnSt.bound){ lrnSt.bound=true;
@@ -189,9 +189,10 @@ function renderLearn(){
       const opt=e.target.closest('.lrn-opt'); if(opt){ const qz=opt.closest('.lrn-quiz'),art=LRN.find(x=>x.id===lrnSt.sel),b=art.blocks.find(x=>x.id===qz.dataset.q),k=+opt.dataset.k;
         qz.querySelectorAll('.lrn-opt').forEach((o,i)=>{ o.disabled=true; o.classList.toggle('right',i===b.c); o.classList.toggle('wrong',i===k&&k!==b.c); });
         lrnAnswer(qz,k===b.c); return; }
+      if(e.target.closest('[data-lrnlist]')){ $('lrnRows').scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}); return; }
       const nx=e.target.closest('[data-next]'); if(nx){ lrnOpen(nx.dataset.next,true); return; }
       const re=e.target.closest('[data-re]'); if(re){ const t=rd.querySelector(`[data-bid="${re.dataset.re}"]`); if(t){ t.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'center'}); t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash'); } return; }
-      if(e.target.closest('#lrnDone')){ const p=lrnProg(),id=lrnSt.sel; if(p.done[id]) delete p.done[id]; else { p.done[id]=1; lrnAward(20); } lrnSave(); renderLearnProgress(); renderLearnList(); renderLearnReader(false); } });
+      if(e.target.closest('#lrnDone')){ const p=lrnProg(),id=lrnSt.sel; if(p.done[id]){ delete p.done[id]; lrnSt.justDone=null; } else { p.done[id]=1; lrnAward(20); lrnSt.justDone=id; } lrnSave(); renderLearnProgress(); renderLearnList(); renderLearnReader(false); const af=$('lrnAfter'); if(af) af.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'center'}); } });
     rd.addEventListener('submit',e=>{ const f=e.target.closest('.lrn-guess'); if(!f) return; e.preventDefault();
       const qz=f.closest('.lrn-quiz'),art=LRN.find(x=>x.id===lrnSt.sel),b=art.blocks.find(x=>x.id===qz.dataset.q),inp=f.querySelector('input');
       if(!inp.value.trim()){ inp.focus(); return; } const g=lrnNum(inp.value),ok=Math.abs(g-b.answer)<=Math.max(Math.abs(b.answer)*b.tol,.0001);
@@ -199,6 +200,15 @@ function renderLearn(){
       lrnAnswer(qz,ok,`A tua estimativa: <b class="num">${nf(g,b.unit==='€'?0:1)} ${b.unit}</b>. Resposta: <b class="num">${nf(b.answer,b.unit==='€'?0:1)} ${b.unit}</b>. `); });
   }
   renderLearnProgress(); renderLearnList(); renderLearnReader(true); }
-function lrnOpen(id,scroll){ lrnSt.sel=id; if(st.view!=='aprender'){ go('aprender'); return; } renderLearnList(); renderLearnReader(true); if(scroll&&innerWidth<1080) setTimeout(()=>$('lrnRead').scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}),60); else window.scrollTo({top:0}); }
+function lrnOpen(id,scroll){ lrnSt.sel=id; lrnSt.justDone=null; if(st.view!=='aprender'){ go('aprender'); return; } renderLearnList(); renderLearnReader(true); if(scroll&&innerWidth<1080) setTimeout(()=>$('lrnRead').scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'}),60); else window.scrollTo({top:0}); }
 // Abre a biblioteca já filtrada num módulo (usado pelo mapa da Home).
 function lrnOpenModule(id){ lrnSt.topic=id; lrnSt.q=''; const first=LRN.find(a=>a.topic===id); if(first) lrnSt.sel=first.id; if(st.view!=='aprender') go('aprender'); else renderLearn(); }
+
+// Fim da aula: próximo tema por ler; depois de "Marcar como lido", um menu com alternativas de outros módulos
+function lrnNextHtml(a,p){
+  const i=LRN.indexOf(a),nx=LRN.slice(i+1).find(x=>x.topic===a.topic&&!p.done[x.id])||LRN.find(x=>x!==a&&!p.done[x.id]);
+  const next=nx?`<button class="lrn-next mc-${lrnMod(nx.topic).color}" data-next="${nx.id}"><span>Próximo tema</span><b>${esc(nx.title)}</b></button>`:'';
+  if(lrnSt.justDone!==a.id) return next;
+  const alts=LRN_MODULES.map(m=>LRN.find(x=>x.topic===m.id&&x!==a&&x!==nx&&!p.done[x.id])).filter(Boolean).slice(0,4);
+  return `<div class="lrn-after" id="lrnAfter" role="region" aria-label="O que ler a seguir"><p class="lrn-after-t">${nx?'Feito. O que lês a seguir?':'Leste todos os temas.'}</p>${next}${alts.length?`<p class="lab">Ou escolhe outro tema</p><div class="lrn-alt">${alts.map(x=>`<button class="btn mc-${lrnMod(x.topic).color}" data-next="${x.id}"><span class="lab">${esc(lrnMod(x.topic).name)}</span>${esc(x.title)}</button>`).join('')}</div>`:''}<button class="btn" data-lrnlist>Ver todos os temas</button></div>`;
+}

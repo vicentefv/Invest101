@@ -183,3 +183,11 @@
 .lrn-gl dl>div[hidden]{display:none}
 .lrn-gl dt{font-family:var(--f-display);font-weight:800;font-size:13px;color:var(--ink);margin-bottom:4px}
 .lrn-gl dd{margin:0;font-size:14px;line-height:1.5;color:var(--ink-2)}
+
+/* Menu depois de "Marcar como lido" */
+.lrn-after{margin:18px clamp(16px,3vw,40px) 0;padding-top:16px;border-top:2px solid var(--frame);display:grid;gap:10px}
+.lrn-after .lrn-next{margin:0}
+.lrn-after-t{margin:0;font-family:var(--f-display);font-size:clamp(18px,2.4vw,24px);letter-spacing:-.02em}
+.lrn-alt{display:grid;gap:8px;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr))}
+.lrn-alt .btn{white-space:normal;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;min-height:44px;border-left:4px solid var(--mc)}
+.lrn-after>[data-lrnlist]{justify-self:start;min-height:44px}
